@@ -275,6 +275,11 @@ export class Scene implements IAnimatable, IClipPlanesHolder, IAssetContainer {
     public environmentBRDFTexture: BaseTexture;
 
     /**
+     * This stores the brdf lookup for the fuzz layer of PBR materials in your scene.
+     */
+    public environmentFuzzBRDFTexture: BaseTexture;
+
+    /**
      * Intensity of the environment (i.e. all indirect lighting) in all pbr material.
      * This dims or reinforces the indirect lighting overall (reflection and diffuse).
      * As in the majority of the scene they are the same (exception for multi room and so on),
@@ -1234,20 +1239,14 @@ export class Scene implements IAnimatable, IClipPlanesHolder, IAssetContainer {
 
         const invertNormal = this.useRightHandedSystem === (this._mirroredCameraPosition != null);
 
-        TmpVectors.Vector4[0].set(eyePosition.x, eyePosition.y, eyePosition.z, invertNormal ? -1 : 1);
-
-        TmpVectors.Vector4[1].copyFromFloats(
-            TmpVectors.Vector4[0].x - this.floatingOriginOffset.x,
-            TmpVectors.Vector4[0].y - this.floatingOriginOffset.y,
-            TmpVectors.Vector4[0].z - this.floatingOriginOffset.z,
-            TmpVectors.Vector4[0].w
-        );
+        const offset = this.floatingOriginOffset;
+        const finalEyePos = TmpVectors.Vector4[0].set(eyePosition.x - offset.x, eyePosition.y - offset.y, eyePosition.z - offset.z, invertNormal ? -1 : 1);
 
         if (effect) {
             if (isVector3) {
-                effect.setFloat3(variableName, TmpVectors.Vector4[1].x, TmpVectors.Vector4[1].y, TmpVectors.Vector4[1].z);
+                effect.setFloat3(variableName, finalEyePos.x, finalEyePos.y, finalEyePos.z);
             } else {
-                effect.setVector4(variableName, TmpVectors.Vector4[1]);
+                effect.setVector4(variableName, finalEyePos);
             }
         }
 
@@ -1262,13 +1261,8 @@ export class Scene implements IAnimatable, IClipPlanesHolder, IAssetContainer {
         const ubo = this.getSceneUniformBuffer();
         const eyePosition = this.bindEyePosition(null);
 
-        ubo.updateFloat4(
-            "vEyePosition",
-            eyePosition.x - this.floatingOriginOffset.x,
-            eyePosition.y - this.floatingOriginOffset.y,
-            eyePosition.z - this.floatingOriginOffset.z,
-            eyePosition.w
-        );
+        const offset = this.floatingOriginOffset;
+        ubo.updateFloat4("vEyePosition", eyePosition.x - offset.x, eyePosition.y - offset.y, eyePosition.z - offset.z, eyePosition.w);
 
         ubo.update();
 
@@ -2797,10 +2791,10 @@ export class Scene implements IAnimatable, IClipPlanesHolder, IAssetContainer {
     private _floatingOriginOffsetDefault: Vector3 = Vector3.Zero();
     /**
      * @experimental
-     * When floatingOriginMode is enabled, offset is equal to the active camera position. If no active camera or floatingOriginMode is disabled, offset is 0.
+     * When floatingOriginMode is enabled, offset is equal to the active camera position in world space. If no active camera or floatingOriginMode is disabled, offset is 0.
      */
     public get floatingOriginOffset(): Vector3 {
-        return this.floatingOriginMode && this.activeCamera ? this.activeCamera.position : this._floatingOriginOffsetDefault;
+        return this.floatingOriginMode && this.activeCamera ? this.activeCamera.getWorldMatrix().getTranslation() : this._floatingOriginOffsetDefault;
     }
 
     /**

@@ -668,7 +668,7 @@ export class BackgroundMaterial extends BackgroundMaterialBase {
             undefined,
             undefined,
             undefined,
-            this._setVertexOutputInvariant
+            this._isVertexOutputInvariant
         );
 
         // Values that need to be evaluated on every frame
@@ -941,7 +941,7 @@ export class BackgroundMaterial extends BackgroundMaterialBase {
                         BindTextureMatrix(this._diffuseTexture, this._uniformBuffer, "diffuse");
                     }
 
-                    BindIBLParameters(scene, defines, this._uniformBuffer, Color3.White(), reflectionTexture, false, true);
+                    BindIBLParameters(scene, defines, this._uniformBuffer, Color3.White(), reflectionTexture, false, true, false, false, false, false, this._reflectionBlur);
                 }
 
                 if (this.shadowLevel > 0) {

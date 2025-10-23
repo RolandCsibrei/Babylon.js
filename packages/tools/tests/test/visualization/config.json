@@ -2,6 +2,11 @@
     "root": "https://cdn.babylonjs.com",
     "tests": [
         {
+            "title": "Gaussian Splatting Shadows",
+            "playgroundId": "#OE54M5#16",
+            "referenceImage": "gsplat-shadows.png"
+        },
+        {
             "title": "NPE - Angle align",
             "playgroundId": "#H5RP91",
             "referenceImage": "npe-angle-align.png"
@@ -1197,7 +1202,7 @@
         },
         {
             "title": "GLTF Node visibility test",
-            "playgroundId": "#80DN99#3",
+            "playgroundId": "#80DN99#6",
             "referenceImage": "gltfNodeVisibility.png"
         },
         {
@@ -1918,7 +1923,7 @@
         {
             "title": "Multi cameras and output render target",
             "renderCount": 2,
-            "playgroundId": "#BCYE7J#31",
+            "playgroundId": "#BCYE7J#46",
             "referenceImage": "multiCamerasOutputRenderTarget.png"
         },
         {
@@ -2651,7 +2656,7 @@
         },
         {
             "title": "FrameGraph nrge TAA",
-            "playgroundId": "#IG8NRC#33",
+            "playgroundId": "#IG8NRC#77",
             "renderCount": 15
         },
         {
@@ -2666,6 +2671,15 @@
         {
             "title": "FrameGraph nrge clustered lights (simple)",
             "playgroundId": "#1QCA2M#26"
+        },
+        {
+            "title": "FrameGraph nrge multiple post processes",
+            "playgroundId": "#SYQW69#1339"
+        },
+        {
+            "title": "FrameGraph nrge SSAO",
+            "playgroundId": "#SYQW69#1350",
+            "excludedEngines": ["webgl1", "webgpu"]
         },
         {
             "title": "FrameGraph nrg gui bloom",
@@ -2708,6 +2722,30 @@
             "title": "FrameGraph motion blur skinned",
             "playgroundId": "#YB006J#749",
             "renderCount": 40
+        },
+        {
+            "title": "FrameGraph convolution post process",
+            "playgroundId": "#SYQW69#1318"
+        },
+        {
+            "title": "FrameGraph screen space curvature post process",
+            "playgroundId": "#SYQW69#1323",
+            "excludedEngines": ["webgl1", "webgpu"]
+        },
+        {
+            "title": "FrameGraph sharpen post process",
+            "playgroundId": "#SYQW69#1329",
+            "errorRatio": 6
+        },
+        {
+            "title": "FrameGraph custom post process",
+            "playgroundId": "#R33LVG"
+        },
+        {
+            "title": "FrameGraph TAA reproject history",
+            "playgroundId": "#OWGOUN#14",
+            "renderCount": 40,
+            "excludeFromAutomaticTesting": true
         },
         {
             "title": "Render target texture with clustered lights",
@@ -3009,6 +3047,10 @@
             "excludedEngines": ["webgl1"]
         },
         {
+            "title": "Specular Reflectance with IOR V2 Manifest",
+            "playgroundId": "#KQYNYS#49"
+        },
+        {
             "title": "OpenPBR Coat Roughness vs Coat Ior - Analytic Lights",
             "playgroundId": "#GRQHVV#80",
             "excludedEngines": ["webgl1"]
@@ -3017,6 +3059,101 @@
             "title": "OpenPBR Coat Roughness vs Coat Ior - IBL",
             "playgroundId": "#GRQHVV#81",
             "excludedEngines": ["webgl1"]
+        },
+        {
+            "title": "OpenPBR Thin Film Weight VS IOR - IBL",
+            "playgroundId": "#GRQHVV#86",
+            "excludedEngines": ["webgl1"]
+        },
+        {
+            "title": "OpenPBR Thin Film Weight VS IOR - Analytic Lights",
+            "playgroundId": "#GRQHVV#87",
+            "excludedEngines": ["webgl1"]
+        },
+        {
+            "title": "OpenPBR Thin Film Thickness VS IOR - Analytic Lights",
+            "playgroundId": "#GRQHVV#88",
+            "excludedEngines": ["webgl1"]
+        },
+        {
+            "title": "OpenPBR Thin Film Thickness VS IOR - IBL",
+            "playgroundId": "#GRQHVV#89",
+            "excludedEngines": ["webgl1"]
+        },
+        {
+            "title": "OpenPBR Thin Film Weight VS IOR - Furnace Test",
+            "playgroundId": "#GRQHVV#90",
+            "excludedEngines": ["webgl1"]
+        },
+        {
+            "title": "OpenPBR Thin Film Thickness VS IOR - Furnace Test",
+            "playgroundId": "#GRQHVV#91",
+            "excludedEngines": ["webgl1"]
+        },
+        {
+            "title": "OpenPBR Thin Film Thickness VS IOR Metal - Furnace Test",
+            "playgroundId": "#GRQHVV#94",
+            "excludedEngines": ["webgl1"]
+        },
+        {
+            "title": "OpenPBR Thin Film and Specular Weight - Analytic Lights",
+            "playgroundId": "#GRQHVV#95",
+            "excludedEngines": ["webgl1"]
+        },
+        {
+            "title": "OpenPBR Thin Film and Specular Weight Metals - Analytic Lights",
+            "playgroundId": "#GRQHVV#96",
+            "excludedEngines": ["webgl1"]
+        },
+        {
+            "title": "OpenPBR Thin Film and Specular Weight Metals - IBL",
+            "playgroundId": "#GRQHVV#97",
+            "excludedEngines": ["webgl1"]
+        },
+        {
+            "title": "OpenPBR Thin Film and Specular Weight - IBL",
+            "playgroundId": "#GRQHVV#98",
+            "excludedEngines": ["webgl1"]
+        },
+        {
+            "title": "OpenPBR Thin Film Textures - IBL",
+            "playgroundId": "#GRQHVV#101",
+            "excludedEngines": ["webgl1"],
+            "renderCount": 2
+        },
+        {
+            "title": "OpenPBR Fuzz Weight vs Fuzz Roughness - IBL",
+            "playgroundId": "#GRQHVV#111",
+            "excludedEngines": ["webgl1"]
+        },
+        {
+            "title": "OpenPBR Fuzz Weight vs Fuzz Roughness - Analytic Lights",
+            "playgroundId": "#GRQHVV#112",
+            "excludedEngines": ["webgl1"]
+        },
+        {
+            "title": "OpenPBR Fuzz Weight vs Coat Weight with Normal Maps - Analytic Lights",
+            "playgroundId": "#GRQHVV#109",
+            "excludedEngines": ["webgl1"]
+        },
+        {
+            "title": "OpenPBR Fuzz Weight vs Coat Weight with Normal Maps - IBL",
+            "playgroundId": "#GRQHVV#108",
+            "excludedEngines": ["webgl1"]
+        },
+        {
+            "title": "OpenPBR Fuzz Weight vs Fuzz Roughness - Realtime IBL",
+            "playgroundId": "#GRQHVV#110",
+            "excludedEngines": ["webgl1"]
+        },
+        {
+            "title": "OpenPBR Fuzz Weight vs Fuzz Roughness - Furnace Test",
+            "playgroundId": "#GRQHVV#115",
+            "excludedEngines": ["webgl1"]
+        },
+        {
+            "title": "Background material blur",
+            "playgroundId": "#UU7RQ#4458"
         }
     ]
 }

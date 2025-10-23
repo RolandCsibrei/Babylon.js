@@ -14,6 +14,7 @@ import { DefaultInspectorExtensionFeed } from "./extensibility/defaultInspectorE
 import { MakeModularTool } from "./modularTool";
 import { GizmoServiceDefinition } from "./services/gizmoService";
 import { GizmoToolbarServiceDefinition } from "./services/gizmoToolbarService";
+import { MiniStatsServiceDefinition } from "./services/miniStatsService";
 import { DebugServiceDefinition } from "./services/panes/debugService";
 import { AnimationGroupPropertiesServiceDefinition } from "./services/panes/properties/animationGroupPropertiesService";
 import { AnimationPropertiesServiceDefinition } from "./services/panes/properties/animationPropertiesService";
@@ -57,10 +58,11 @@ import { PickingServiceDefinition } from "./services/pickingService";
 import { SceneContextIdentity } from "./services/sceneContext";
 import { SelectionServiceDefinition } from "./services/selectionService";
 import { ShellServiceIdentity } from "./services/shellService";
+import { UserFeedbackServiceDefinition } from "./services/userFeedbackService";
 
 let CurrentInspectorToken: Nullable<IDisposable> = null;
 
-type InspectorV2Options = Omit<ModularToolOptions, "containerElement">;
+type InspectorV2Options = Omit<ModularToolOptions, "containerElement" | "sidePaneRemapper" | "toolbarMode">;
 
 export function IsInspectorVisible(): boolean {
     return CurrentInspectorToken != null;
@@ -254,6 +256,12 @@ function _ShowInspector(scene: Nullable<Scene>, options: Partial<IInspectorOptio
             // Allows picking objects from the scene to select them.
             PickingServiceDefinition,
 
+            // Adds entry points for user feedback on Inspector v2 (probably eventually will be removed).
+            UserFeedbackServiceDefinition,
+
+            // Adds always present "mini stats" (like fps) to the toolbar, etc.
+            MiniStatsServiceDefinition,
+
             // Additional services passed in to the Inspector.
             ...(options.serviceDefinitions ?? []),
         ],
@@ -261,7 +269,23 @@ function _ShowInspector(scene: Nullable<Scene>, options: Partial<IInspectorOptio
         showThemeSelector: options.showThemeSelector,
         extensionFeeds: [DefaultInspectorExtensionFeed, ...(options.extensionFeeds ?? [])],
         toolbarMode: "compact",
-        sidePaneMode: options.embedMode ? "right" : "both",
+        sidePaneRemapper: options.embedMode
+            ? (sidePane) => {
+                  if (sidePane.horizontalLocation === "right") {
+                      // All right panes go to right bottom.
+                      return {
+                          horizontalLocation: "right",
+                          verticalLocation: "bottom",
+                      };
+                  } else {
+                      // All left panes go to right top.
+                      return {
+                          horizontalLocation: "right",
+                          verticalLocation: "top",
+                      };
+                  }
+              }
+            : undefined,
     });
     disposeActions.push(() => modularTool.dispose());
 
